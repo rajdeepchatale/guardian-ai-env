@@ -264,7 +264,6 @@ grpo_config = GRPOConfig(
     warmup_steps=10,
     optim="adamw_torch",
     max_grad_norm=1.0,
-    gradient_checkpointing=True,
 
     # GRPO configuration
     num_generations=2,
