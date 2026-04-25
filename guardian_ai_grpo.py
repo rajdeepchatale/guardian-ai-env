@@ -302,6 +302,19 @@ The trainer automatically handles the entire interaction loop:
 
 from trl import GRPOTrainer
 from peft import LoraConfig
+from transformers import AutoModelForCausalLM, BitsAndBytesConfig
+import torch
+
+quant_config = BitsAndBytesConfig(
+    load_in_4bit=True,
+    bnb_4bit_compute_dtype=torch.float16,
+)
+
+model = AutoModelForCausalLM.from_pretrained(
+    model_name,
+    quantization_config=quant_config,
+    device_map="auto"
+)
 
 peft_config = LoraConfig(
     r=16,
@@ -313,7 +326,7 @@ peft_config = LoraConfig(
 )
 
 trainer = GRPOTrainer(
-    model=model_name,
+    model=model,
     reward_funcs=reward_func,
     train_dataset=dataset,
     args=grpo_config,
