@@ -32,6 +32,11 @@ Log in to your Hugging Face account to save your fine-tuned model and track expe
 """
 
 import os
+
+# Force single-GPU mode. Kaggle's T4x2 exposes 2 GPUs which breaks
+# TRL's environment_factory (zip mismatch between prompts and environments).
+os.environ["CUDA_VISIBLE_DEVICES"] = "0"
+
 from huggingface_hub import login
 
 # Log in using the HF_TOKEN environment variable injected by HF Jobs
@@ -314,7 +319,7 @@ quant_config = BitsAndBytesConfig(
 model = AutoModelForCausalLM.from_pretrained(
     model_name,
     quantization_config=quant_config,
-    device_map="auto",
+    device_map={"":0},
     torch_dtype=torch.float16,
 )
 model.gradient_checkpointing_enable(gradient_checkpointing_kwargs={"use_reentrant": False})
