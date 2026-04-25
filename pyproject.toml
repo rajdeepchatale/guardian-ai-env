@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools>=45", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "openenv-guardian_ai"
+version = "0.1.0"
+description = "AI oversight training environment for OpenEnv — trains agents to monitor and catch problematic AI behaviors"
+requires-python = ">=3.10"
+dependencies = [
+    "openenv-core[core]>=0.2.2",
+    "jmespath",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0.0",
+    "pytest-cov>=4.0.0",
+]
+
+[project.scripts]
+server = "guardian_ai.server.app:main"
+
+[tool.setuptools]
+include-package-data = true
+packages = ["guardian_ai", "guardian_ai.server"]
+package-dir = { "guardian_ai" = ".", "guardian_ai.server" = "server" }
