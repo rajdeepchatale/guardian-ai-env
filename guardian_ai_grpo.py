@@ -316,6 +316,7 @@ model = AutoModelForCausalLM.from_pretrained(
     quantization_config=quant_config,
     device_map="auto"
 )
+model.gradient_checkpointing_enable(gradient_checkpointing_kwargs={"use_reentrant": False})
 
 peft_config = LoraConfig(
     r=16,
