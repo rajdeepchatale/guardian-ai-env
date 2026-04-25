@@ -277,6 +277,7 @@ grpo_config = GRPOConfig(
     use_vllm=True,
     vllm_mode="colocate",
     vllm_gpu_memory_utilization=0.15,
+    vllm_max_model_len=2048,
 
     # Logging / reporting
     output_dir=output_dir,
