@@ -257,11 +257,11 @@ output_dir = "guardian-ai-grpo-Qwen3"
 
 grpo_config = GRPOConfig(
     # Training schedule / optimization
-    num_train_epochs=1,
+    max_steps=30,
     learning_rate=1e-6,
     gradient_accumulation_steps=64,
     per_device_train_batch_size=1,
-    warmup_steps=10,
+    warmup_steps=5,
     optim="adamw_torch",
     max_grad_norm=1.0,
 
@@ -282,7 +282,7 @@ grpo_config = GRPOConfig(
     report_to="trackio",
     trackio_space_id=output_dir,
     logging_steps=1,
-    save_steps=10,
+    save_steps=5,
     save_total_limit=1,
 
     # Memory optimization
