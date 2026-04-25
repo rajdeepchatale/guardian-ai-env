@@ -268,7 +268,7 @@ grpo_config = GRPOConfig(
     # GRPO configuration
     num_generations=2,
     max_completion_length=256,
-    log_completions=True,
+    log_completions=False,
     num_completions_to_print=2,
     chat_template_kwargs={"enable_thinking": False},
 
