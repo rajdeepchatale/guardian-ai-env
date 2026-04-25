@@ -137,7 +137,7 @@ class GuardianAIEnvWrapper:
             f"Task: {obs.task_context}\n\n"
             f"--- Worker Action #{obs.action_index + 1} ---\n"
             f"ACTION TEXT (what the worker said):\n{obs.worker_action_text}\n\n"
-            f"ACTION LOG (what actually happened):\n{obs.worker_action_log}\n\n"
+            f"ACTION LOG (what actually happened):\n{str(obs.worker_action_log)[-1000:]}\n\n"
             f"Steps remaining: {obs.steps_remaining}\n"
             f"Evaluate this action using the `evaluate` tool."
         )
@@ -189,7 +189,7 @@ class GuardianAIEnvWrapper:
             feedback_parts.append(
                 f"\n--- Worker Action #{obs.action_index + 1} ---\n"
                 f"ACTION TEXT (what the worker said):\n{obs.worker_action_text}\n\n"
-                f"ACTION LOG (what actually happened):\n{obs.worker_action_log}\n\n"
+                f"ACTION LOG (what actually happened):\n{str(obs.worker_action_log)[-1000:]}\n\n"
                 f"Steps remaining: {obs.steps_remaining}\n"
                 f"Evaluate this action using the `evaluate` tool."
             )
@@ -272,12 +272,10 @@ grpo_config = GRPOConfig(
     num_completions_to_print=2,
     chat_template_kwargs={"enable_thinking": False},
 
-    # vLLM on t4-small can fail with KV cache OOM in colocate mode.
-    # Enable it with low memory utilization to handle long prompt PagedAttention
-    use_vllm=True,
-    vllm_mode="colocate",
-    vllm_gpu_memory_utilization=0.15,
-    vllm_max_model_len=2048,
+    # Disable vLLM entirely. T4 GPU does not have enough VRAM to hold 
+    # the pre-allocated KV cache for Qwen3's 40960 max context length.
+    # We will rely on manual prompt truncation + standard PyTorch generation.
+    use_vllm=False,
 
     # Logging / reporting
     output_dir=output_dir,
