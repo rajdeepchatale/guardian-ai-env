@@ -264,10 +264,11 @@ grpo_config = GRPOConfig(
     warmup_steps=10,
     optim="adamw_torch",
     max_grad_norm=1.0,
+    gradient_checkpointing=True,
 
     # GRPO configuration
     num_generations=2,
-    max_completion_length=1024,
+    max_completion_length=256,
     log_completions=True,
     num_completions_to_print=2,
     chat_template_kwargs={"enable_thinking": False},
