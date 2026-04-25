@@ -252,8 +252,8 @@ directly with tool calls instead of internal reasoning tokens.
 
 from trl import GRPOConfig
 
-model_name = "Qwen/Qwen2.5-1.5B-Instruct"
-output_dir = "guardian-ai-grpo-Qwen2.5"
+model_name = "Qwen/Qwen3-1.7B"
+output_dir = "guardian-ai-grpo-Qwen3"
 
 grpo_config = GRPOConfig(
     # Training schedule / optimization
