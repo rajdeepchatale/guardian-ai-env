@@ -267,15 +267,16 @@ grpo_config = GRPOConfig(
 
     # GRPO configuration
     num_generations=2,
-    max_prompt_length=512,
     max_completion_length=256,
     log_completions=True,
     num_completions_to_print=2,
     chat_template_kwargs={"enable_thinking": False},
 
     # vLLM on t4-small can fail with KV cache OOM in colocate mode.
-    # Disable it for stability; TRL falls back to standard generation.
-    use_vllm=False,
+    # Enable it with low memory utilization to handle long prompt PagedAttention
+    use_vllm=True,
+    vllm_mode="colocate",
+    vllm_gpu_memory_utilization=0.15,
 
     # Logging / reporting
     output_dir=output_dir,
