@@ -267,6 +267,7 @@ grpo_config = GRPOConfig(
 
     # GRPO configuration
     num_generations=2,
+    max_prompt_length=512,
     max_completion_length=256,
     log_completions=True,
     num_completions_to_print=2,
