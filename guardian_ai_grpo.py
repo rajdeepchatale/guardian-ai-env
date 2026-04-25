@@ -301,12 +301,23 @@ The trainer automatically handles the entire interaction loop:
 """
 
 from trl import GRPOTrainer
+from peft import LoraConfig
+
+peft_config = LoraConfig(
+    r=16,
+    lora_alpha=32,
+    target_modules=["q_proj", "v_proj"],
+    lora_dropout=0.05,
+    bias="none",
+    task_type="CAUSAL_LM",
+)
 
 trainer = GRPOTrainer(
     model=model_name,
     reward_funcs=reward_func,
     train_dataset=dataset,
     args=grpo_config,
+    peft_config=peft_config,
     environment_factory=GuardianAIEnvWrapper,
 )
 
