@@ -314,7 +314,8 @@ quant_config = BitsAndBytesConfig(
 model = AutoModelForCausalLM.from_pretrained(
     model_name,
     quantization_config=quant_config,
-    device_map="auto"
+    device_map="auto",
+    torch_dtype=torch.float16,
 )
 model.gradient_checkpointing_enable(gradient_checkpointing_kwargs={"use_reentrant": False})
 
