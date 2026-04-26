@@ -61,8 +61,7 @@ We fine-tuned **Qwen3-1.7B** using TRL's `GRPOTrainer` with 4-bit quantization a
 | **Loss** | 0.12 | 0.06 | **↓ -50%** |
 | **Entropy** | 0.15 | 0.13 | ↓ (more confident) |
 
-![Training metrics over 30 GRPO steps](assets/trackio_dashboard.png)
-*Trackio dashboard: loss decreasing and reward increasing over 30 steps. [View live →](https://huggingface.co/spaces/rajdeepchatale/guardian-ai-grpo-Qwen3)*
+*Training charts are available in the [interactive demo →](https://huggingface.co/spaces/rajdeepchatale/guardian_ai) and the [live Trackio dashboard →](https://huggingface.co/spaces/rajdeepchatale/guardian-ai-grpo-Qwen3)*
 
 ### Before vs After: Concrete Examples
 
@@ -103,13 +102,13 @@ GuardianAI isn't a static filter — it's a **self-improving oversight system**.
 
 | Deliverable | Link |
 |---|---|
-| **OpenEnv Environment** | [guardian-ai-env Space](https://huggingface.co/spaces/rajdeepchatale/guardian-ai-env) |
-| **Interactive Demo** | [GuardianAI Space](https://huggingface.co/spaces/rajdeepchatale/guardian_ai) |
-| **Trained Model** | [guardian-ai-grpo-Qwen3](https://huggingface.co/rajdeepchatale/guardian-ai-grpo-Qwen3) |
-| **Training Dashboard** | [Trackio Space](https://huggingface.co/spaces/rajdeepchatale/guardian-ai-grpo-Qwen3) |
-| **Training Script** | [guardian_ai_grpo.py](guardian_ai_grpo.py) |
-| **Kaggle Notebook** | [GRPO Training](https://www.kaggle.com/code/rajdeepchatale/notebook37714192a6) |
-| **GitHub** | [rajdeepchatale/guardian-ai-env](https://github.com/rajdeepchatale/guardian-ai-env) |
+| **🎮 Interactive Demo** | [huggingface.co/spaces/rajdeepchatale/guardian_ai](https://huggingface.co/spaces/rajdeepchatale/guardian_ai) |
+| **🌐 OpenEnv Environment** | [huggingface.co/spaces/rajdeepchatale/guardian-ai-env](https://huggingface.co/spaces/rajdeepchatale/guardian-ai-env) |
+| **🧠 Trained Model** | [huggingface.co/rajdeepchatale/guardian-ai-grpo-Qwen3](https://huggingface.co/rajdeepchatale/guardian-ai-grpo-Qwen3) |
+| **📊 Training Dashboard** | [huggingface.co/spaces/rajdeepchatale/guardian-ai-grpo-Qwen3](https://huggingface.co/spaces/rajdeepchatale/guardian-ai-grpo-Qwen3) |
+| **📝 Training Script** | [github.com/.../guardian_ai_grpo.py](https://github.com/rajdeepchatale/guardian-ai-env/blob/main/guardian_ai_grpo.py) |
+| **📓 Kaggle Notebook** | [kaggle.com/code/rajdeepchatale/notebook37714192a6](https://www.kaggle.com/code/rajdeepchatale/notebook37714192a6) |
+| **💻 GitHub Repository** | [github.com/rajdeepchatale/guardian-ai-env](https://github.com/rajdeepchatale/guardian-ai-env) |
 
 ---
 
