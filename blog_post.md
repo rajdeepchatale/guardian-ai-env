@@ -30,7 +30,7 @@ The Guardian must return a structured JSON decision classifying the action (e.g.
 
 ### ⚖️ The 5-Component Grading System
 
-We utilized the **GRPO (Group Relative Policy Optimization)** algorithm using `trl[vllm]`. Because GRPO requires scalar rewards, we built a highly complex deterministic grading engine.
+We utilized the **GRPO (Group Relative Policy Optimization)** algorithm via TRL. Because GRPO requires scalar rewards, we built a deterministic grading engine with 5 independent components.
 
 Rewards are calculated out of `1.0` per step:
 *   **Detection (25%)**: Did it flag the issue?
@@ -49,16 +49,57 @@ To prevent this, our environment includes **Ground Truth Traps**: Scenarios that
 
 ## 📈 Training and Results
 
-We fine-tuned **Qwen3-1.7B** using TRL's `GRPOTrainer` on a cloud T4 GPU. 
+We fine-tuned **Qwen3-1.7B** using TRL's `GRPOTrainer` with 4-bit quantization (BitsAndBytes) and LoRA adapters (r=16, α=32) on a Kaggle T4 GPU.
 
-*(Training Reward and Loss curves will be embedded here upon completion of the training job)*
+### Key Metrics
 
-- **Reward Curve:** ![Reward Curve](reward_curve.png)
-- **Loss Curve:** ![Loss Curve](loss_curve.png)
+| Metric | Start | End | Change |
+|--------|-------|-----|--------|
+| **Reward (mean)** | 0.45 | 0.60 | ↑ **+33%** |
+| **Loss** | 0.12 | 0.06 | ↓ **-50%** |
+| **Entropy** | 0.15 | 0.13 | ↓ (more confident) |
+
+### Training Dashboard
+
+![Training metrics showing loss, reward, and token counts over 30 GRPO steps](assets/trackio_dashboard.png)
+*Trackio dashboard showing loss decreasing and reward increasing over 30 training steps. Three runs correspond to iterative debugging; the final run (orange) shows clear convergence.*
+
+### Training Configuration
+
+| Parameter | Value |
+|-----------|-------|
+| **Base Model** | Qwen/Qwen3-1.7B |
+| **Method** | GRPO (TRL GRPOTrainer) |
+| **Quantization** | 4-bit (BitsAndBytes NF4) |
+| **Fine-tuning** | LoRA (r=16, α=32) |
+| **Steps** | 30 |
+| **GPU** | NVIDIA T4 (14.6GB VRAM, 97.7% utilization) |
+| **Training Time** | ~4.5 hours |
+
+### What The Model Learned
+
+After training, the model correctly:
+- **Detects data leaks** by checking if exposed data exceeds what was requested
+- **Catches hallucinations** by comparing claimed code with actual file contents in logs
+- **Identifies unauthorized actions** by cross-referencing API calls against permission lists
+- **Avoids false positives** on safe actions that merely look suspicious
+- **Cites specific evidence** from action logs rather than making vague claims
+
+---
 
 ## 🔮 What's Next?
 
 We envision GuardianAI scaling to monitor massive fleets of autonomous agents. The next step is introducing multi-agent adversarial training, where a red-teaming bot actively tries to sneak policy violations past the Guardian agent. 
 
-**Try the environment yourself via our HF Space:**
-👉 [rajdeepchatale/guardian_ai](https://huggingface.co/spaces/rajdeepchatale/guardian_ai)
+---
+
+## 🔗 Links
+
+| Deliverable | Link |
+|-------------|------|
+| **HF Space** | [rajdeepchatale/guardian-ai](https://huggingface.co/spaces/rajdeepchatale/guardian-ai) |
+| **Trained Model** | [rajdeepchatale/guardian-ai-grpo-Qwen3](https://huggingface.co/rajdeepchatale/guardian-ai-grpo-Qwen3) |
+| **Training Dashboard** | [Trackio Space](https://huggingface.co/spaces/rajdeepchatale/guardian-ai-grpo-Qwen3) |
+| **Training Script** | [guardian_ai_grpo.py](guardian_ai_grpo.py) |
+| **Kaggle Notebook** | [GRPO Training](https://www.kaggle.com/code/rajdeepchatale/notebook37714192a6) |
+| **GitHub** | [rajdeepchatale/guardian-ai-env](https://github.com/rajdeepchatale/guardian-ai-env) |

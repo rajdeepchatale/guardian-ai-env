@@ -8,9 +8,31 @@ pinned: false
 ---
 # 🛡️ GuardianAI
 
-![OpenEnv](https://img.shields.io/badge/OpenEnv-RL%20Environment-6C63FF?style=for-the-badge) ![PyTorch](https://img.shields.io/badge/PyTorch-2.x-EE4C2C?style=for-the-badge&logo=pytorch&logoColor=white) ![TRL](https://img.shields.io/badge/TRL-GRPO-8E44AD?style=for-the-badge) ![License](https://img.shields.io/badge/License-TODO-lightgrey?style=for-the-badge)
+![OpenEnv](https://img.shields.io/badge/OpenEnv-RL%20Environment-6C63FF?style=for-the-badge) ![PyTorch](https://img.shields.io/badge/PyTorch-2.x-EE4C2C?style=for-the-badge&logo=pytorch&logoColor=white) ![TRL](https://img.shields.io/badge/TRL-GRPO-8E44AD?style=for-the-badge) ![Qwen](https://img.shields.io/badge/Qwen3-1.7B-00C7B7?style=for-the-badge)
 
-**GuardianAI** is an OpenEnv reinforcement learning environment where a **Guardian agent** learns to monitor and oversee another AI (**Worker**) in real time.
+**GuardianAI** is an OpenEnv reinforcement learning environment where a **Guardian agent** learns to monitor and oversee another AI (**Worker**) in real time — catching hallucinations, data leaks, unauthorized actions, and false confidence before they reach users.
+
+---
+
+## 📊 Training Results
+
+> **Model:** Qwen3-1.7B fine-tuned with GRPO · **Steps:** 30 · **GPU:** NVIDIA T4 (Kaggle) · **Time:** ~4.5 hours
+
+| Metric | Start | End | Change |
+|--------|-------|-----|--------|
+| **Reward (mean)** | 0.45 | 0.60 | ↑ **+33%** |
+| **Loss** | 0.12 | 0.06 | ↓ **-50%** |
+| **Entropy** | 0.15 | 0.13 | ↓ (more confident) |
+
+### Training Dashboard (Trackio)
+
+![Training metrics showing loss decreasing from 0.12 to 0.06 and reward increasing from 0.45 to 0.60 over 30 GRPO steps](assets/trackio_dashboard.png)
+*Loss, reward, and token metrics tracked live via Trackio over 30 training steps. Three runs are shown (iterative debugging). The final run (orange) shows clear convergence.*
+
+### Interactive Demo
+
+![GuardianAI demo showing training stats cards with 0.60 reward, 0.06 loss, 30/30 steps complete, and an evaluation of a data leak scenario](assets/demo_evaluation.png)
+*The Gradio demo lets judges select scenarios and see GuardianAI's decision, severity, response, and evidence-backed reasoning — plus a before/after comparison with the untrained baseline.*
 
 ---
 
@@ -137,37 +159,45 @@ Use your OpenEnv-compatible client to call reset/step endpoints and train or eva
 
 ## 🏋️ Training
 
-GuardianAI is trained with **TRL GRPO** to optimize policy quality from structured, multi-component rewards rather than a single scalar objective.
+GuardianAI is trained with **TRL GRPO** (Group Relative Policy Optimization) to optimize policy quality from structured, multi-component rewards rather than a single scalar objective.
 
-- **Policy model:** Qwen-7B-Instruct
-- **Trainer:** TRL (GRPO)
-- **Acceleration/efficiency:** Unsloth
-- **Objective:** maximize balanced oversight behavior across detection, false-positive control, classification, response quality, and reasoning quality
-- **Rollout pattern:** sample worker actions across domains -> guardian predicts decision + reasoning -> environment computes weighted rewards -> GRPO updates guardian policy
-- **Inference serving:** Qwen-72B-Instruct via Hugging Face Inference API
-
-## 📈 Results
-
-![Reward Curve](reward_curve.png)
-![Loss Curve](loss_curve.png)
+| Parameter | Value |
+|-----------|-------|
+| **Base Model** | Qwen/Qwen3-1.7B |
+| **Trainer** | TRL GRPOTrainer |
+| **Quantization** | 4-bit (BitsAndBytes NF4) |
+| **Fine-tuning** | LoRA (r=16, α=32, targets: q_proj + v_proj) |
+| **Training Steps** | 30 |
+| **GPU** | NVIDIA T4 (Kaggle, 14.6GB VRAM) |
+| **GPU Utilization** | 97.7% (14.2 / 14.6 GB) |
+| **Rollout Pattern** | Sample worker actions → Guardian predicts → Environment grades → GRPO updates |
 
 ---
 
 ## 🔗 Links
 
-- Hugging Face Space: [TODO](https://huggingface.co/spaces/your-org/guardian-ai)
-- Colab Notebook: [TODO](https://colab.research.google.com/)
-- Blog: [TODO](https://your-blog-url.com/)
+| Deliverable | Link |
+|-------------|------|
+| **HF Space (Demo)** | [rajdeepchatale/guardian-ai](https://huggingface.co/spaces/rajdeepchatale/guardian-ai) |
+| **Trained Model** | [rajdeepchatale/guardian-ai-grpo-Qwen3](https://huggingface.co/rajdeepchatale/guardian-ai-grpo-Qwen3) |
+| **Training Dashboard (Trackio)** | [guardian-ai-grpo-Qwen3 Space](https://huggingface.co/spaces/rajdeepchatale/guardian-ai-grpo-Qwen3) |
+| **Training Script** | [guardian_ai_grpo.py](guardian_ai_grpo.py) |
+| **Kaggle Notebook** | [GRPO Training Notebook](https://www.kaggle.com/code/rajdeepchatale/notebook37714192a6) |
+| **Blog / Writeup** | [blog_post.md](blog_post.md) |
+| **GitHub** | [rajdeepchatale/guardian-ai-env](https://github.com/rajdeepchatale/guardian-ai-env) |
 
 ---
 
 ## 🛠️ Built With
 
-- OpenEnv
-- PyTorch
-- TRL
-- Unsloth
-- FastAPI
+- [OpenEnv](https://github.com/openenv) — RL environment framework
+- [PyTorch](https://pytorch.org/) — Deep learning
+- [TRL](https://github.com/huggingface/trl) — GRPO trainer
+- [PEFT](https://github.com/huggingface/peft) — LoRA adapters
+- [BitsAndBytes](https://github.com/TimDettmers/bitsandbytes) — 4-bit quantization
+- [Trackio](https://github.com/trackio) — Training metric visualization
+- [FastAPI](https://fastapi.tiangolo.com/) — MCP server
+- [Gradio](https://gradio.app/) — Interactive demo
 
 ---
 
