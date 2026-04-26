@@ -230,148 +230,134 @@ DEF_CTX = f"**Domain:** {_def['domain']}  ·  **Role:** {_def['worker_role']}  �
 CSS = """
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
 
-/* ===== ANIMATED GRADIENT BACKGROUND ===== */
+/* ===== BASE ===== */
 .gradio-container {
-    max-width: 1280px !important; margin: 0 auto !important;
+    max-width: 1100px !important; margin: 0 auto !important;
     font-family: 'Inter', sans-serif !important;
-    position: relative;
 }
 .gradio-container::before {
     content: ''; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1;
-    background: linear-gradient(-45deg, #0f0c29, #1a0a3e, #24243e, #0d1b2a, #1b2838);
-    background-size: 400% 400%;
-    animation: gradientShift 15s ease infinite;
-}
-@keyframes gradientShift {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
+    background: #0c0f1a;
 }
 * { font-family: 'Inter', sans-serif !important; }
 
-/* ===== GLASSMORPHISM PANELS ===== */
+/* ===== HERO ===== */
 .hero {
-    text-align: center; padding: 2.5rem 2rem 2rem;
-    background: rgba(15, 12, 41, 0.7) !important;
-    backdrop-filter: blur(20px);
-    border-radius: 24px; margin-bottom: 1.25rem;
-    border: 1px solid rgba(123, 47, 247, 0.25);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255,255,255,0.05);
+    text-align: center; padding: 2.5rem 2rem 1.5rem;
+    background: linear-gradient(145deg, rgba(15,15,35,0.95), rgba(10,10,25,0.95)) !important;
+    border-radius: 20px; margin-bottom: 1rem;
+    border: 1px solid rgba(100,100,180,0.15);
+    box-shadow: 0 4px 24px rgba(0,0,0,0.4);
     position: relative; overflow: hidden;
 }
 .hero::before {
-    content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
-    background: radial-gradient(circle at 30% 40%, rgba(123,47,247,0.08) 0%, transparent 50%),
-                radial-gradient(circle at 70% 60%, rgba(0,210,255,0.06) 0%, transparent 50%);
-    animation: heroGlow 8s ease-in-out infinite alternate;
+    content: ''; position: absolute; top: -40%; left: -40%; width: 180%; height: 180%;
+    background: radial-gradient(circle at 35% 45%, rgba(99,102,241,0.06) 0%, transparent 55%),
+                radial-gradient(circle at 65% 55%, rgba(16,185,129,0.04) 0%, transparent 55%);
 }
-@keyframes heroGlow { 0% { transform: rotate(0deg); } 100% { transform: rotate(10deg); } }
-
 .hero h1 {
-    font-size: 2.8rem; font-weight: 900; margin: 0; position: relative; z-index: 1;
-    background: linear-gradient(135deg, #00d2ff 0%, #7b2ff7 40%, #ff6b6b 80%, #00d2ff 100%);
-    background-size: 200% auto;
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-    animation: shimmer 3s linear infinite;
+    font-size: 2.4rem; font-weight: 800; margin: 0; position: relative; z-index: 1;
+    color: #e2e8f0;
 }
-@keyframes shimmer { to { background-position: 200% center; } }
-
-.hero .sub { color: #b0bec5; font-size: 1.05rem; margin-top: 0.5rem; line-height: 1.7; max-width: 720px; margin-left: auto; margin-right: auto; position: relative; z-index: 1; }
-.hero .links { margin-top: 0.75rem; font-size: 0.85rem; position: relative; z-index: 1; }
-.hero .links a {
-    color: #00d2ff; text-decoration: none; font-weight: 600; margin: 0 0.5rem;
-    padding: 0.3rem 0.8rem; border-radius: 8px;
-    transition: all 0.3s ease;
-    border: 1px solid transparent;
-}
-.hero .links a:hover { background: rgba(0,210,255,0.1); border-color: rgba(0,210,255,0.3); }
-.hero .badge {
+.hero h1 .shield { font-size: 2rem; }
+.hero .sub { color: #94a3b8; font-size: 0.95rem; margin-top: 0.5rem; line-height: 1.7; max-width: 640px; margin-left: auto; margin-right: auto; position: relative; z-index: 1; }
+.hero .tag {
     display: inline-block; position: relative; z-index: 1;
-    background: rgba(220, 38, 38, 0.15); border: 1px solid rgba(220, 38, 38, 0.4);
-    color: #fca5a5; padding: 0.25rem 0.75rem; border-radius: 20px;
-    font-size: 0.8rem; font-weight: 700; margin-top: 0.6rem;
-    animation: badgePulse 2s ease-in-out infinite;
+    background: rgba(99,102,241,0.1); border: 1px solid rgba(99,102,241,0.25);
+    color: #a5b4fc; padding: 0.2rem 0.65rem; border-radius: 6px;
+    font-size: 0.72rem; font-weight: 600; margin-top: 0.75rem; letter-spacing: 0.5px;
 }
-@keyframes badgePulse { 0%,100% { box-shadow: 0 0 0 0 rgba(220,38,38,0.3); } 50% { box-shadow: 0 0 12px 4px rgba(220,38,38,0.15); } }
+.hero .links { margin-top: 0.75rem; font-size: 0.8rem; position: relative; z-index: 1; display: flex; justify-content: center; gap: 0.25rem; flex-wrap: wrap; }
+.hero .links a {
+    color: #94a3b8; text-decoration: none; font-weight: 500; padding: 0.3rem 0.7rem; border-radius: 6px;
+    transition: all 0.2s ease; border: 1px solid transparent; font-size: 0.78rem;
+}
+.hero .links a:hover { color: #e2e8f0; background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.1); }
 
-/* ===== METRIC CARDS — GLASS ===== */
-.metrics { display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap; margin: 0.75rem 0 1.25rem; }
+/* ===== METRICS ===== */
+.metrics { display: flex; gap: 0.5rem; justify-content: center; flex-wrap: wrap; margin: 0.75rem 0 1rem; }
 .metric {
-    background: rgba(26, 26, 46, 0.6) !important;
-    backdrop-filter: blur(12px);
-    border: 1px solid rgba(123, 47, 247, 0.2);
-    border-radius: 16px; padding: 1.1rem 0.9rem; text-align: center;
-    min-width: 135px; flex: 1; max-width: 190px;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    position: relative; overflow: hidden;
+    background: rgba(15,15,30,0.8) !important;
+    border: 1px solid rgba(100,100,180,0.12);
+    border-radius: 12px; padding: 0.9rem 0.7rem; text-align: center;
+    min-width: 120px; flex: 1; max-width: 170px;
+    transition: all 0.2s ease;
 }
-.metric::after {
-    content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.03), transparent);
-    transition: left 0.5s;
-}
-.metric:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(123, 47, 247, 0.2); border-color: rgba(123, 47, 247, 0.4); }
-.metric:hover::after { left: 100%; }
-.metric .val { font-size: 1.7rem; font-weight: 800; letter-spacing: -0.5px; }
-.metric .lbl { font-size: 0.7rem; color: #94a3b8; text-transform: uppercase; letter-spacing: 1px; margin-top: 0.1rem; }
-.metric .chg { font-size: 0.75rem; font-weight: 600; margin-top: 0.1rem; }
-.g{color:#48bb78;}.r{color:#fc8181;}.b{color:#63b3ed;}.p{color:#b794f4;}.o{color:#f6ad55;}
+.metric:hover { border-color: rgba(100,100,180,0.3); transform: translateY(-2px); }
+.metric .val { font-size: 1.5rem; font-weight: 700; }
+.metric .lbl { font-size: 0.65rem; color: #64748b; text-transform: uppercase; letter-spacing: 1.2px; margin-top: 0.15rem; }
+.metric .chg { font-size: 0.7rem; font-weight: 600; margin-top: 0.1rem; }
+.g{color:#34d399;}.r{color:#f87171;}.b{color:#60a5fa;}.p{color:#a78bfa;}.o{color:#fbbf24;}
 
-/* ===== STEP LABELS ===== */
-.step-label {
-    display: inline-block;
-    background: linear-gradient(135deg, #7b2ff7, #00d2ff);
-    color: white; font-weight: 700; font-size: 0.75rem;
-    padding: 0.25rem 0.7rem; border-radius: 20px; margin-right: 0.4rem;
-    box-shadow: 0 2px 8px rgba(123, 47, 247, 0.3);
+/* ===== SECTION HEADERS ===== */
+.section-hdr {
+    font-size: 1.1rem; font-weight: 700; color: #e2e8f0; margin: 1.5rem 0 0.5rem;
+    padding-bottom: 0.4rem; border-bottom: 1px solid rgba(100,100,180,0.15);
+    display: flex; align-items: center; gap: 0.5rem;
 }
-.sh { font-size: 1.35rem; font-weight: 700; color: #e2e8f0; margin: 1.25rem 0 0.5rem; text-align: center; }
+.section-hdr .icon { font-size: 1.2rem; }
 
-/* ===== LIVE BADGE ===== */
-.live-badge {
-    display: inline-block; background: #dc2626; color: white;
-    font-size: 0.7rem; font-weight: 700; padding: 0.15rem 0.55rem;
-    border-radius: 10px; margin-left: 0.3rem;
-    animation: livePulse 1.5s ease-in-out infinite;
-    box-shadow: 0 0 8px rgba(220, 38, 38, 0.4);
+/* ===== SCENARIO PANEL ===== */
+.scenario-ctx {
+    background: rgba(15,15,30,0.6); border: 1px solid rgba(100,100,180,0.12);
+    border-radius: 12px; padding: 1rem; margin-bottom: 0.75rem;
 }
-@keyframes livePulse { 0%,100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.7; transform: scale(0.95); } }
 
-/* ===== BUTTON GLOW ===== */
+/* ===== COMPARISON CARDS ===== */
+.result-card {
+    border-radius: 12px; padding: 1.25rem; min-height: 120px;
+}
+.result-fail {
+    background: rgba(239,68,68,0.05); border: 1px solid rgba(239,68,68,0.2);
+}
+.result-live {
+    background: rgba(99,102,241,0.05); border: 1px solid rgba(99,102,241,0.2);
+}
+.result-trained {
+    background: rgba(16,185,129,0.05); border: 1px solid rgba(16,185,129,0.2);
+}
+.result-placeholder {
+    background: rgba(30,30,50,0.5); border: 1px solid rgba(100,100,180,0.1);
+    border-radius: 12px; padding: 1.5rem; text-align: center; color: #475569;
+}
+.result-placeholder .ph-icon { font-size: 1.5rem; margin-bottom: 0.3rem; }
+.result-placeholder .ph-title { font-weight: 600; font-size: 0.85rem; color: #64748b; }
+.result-placeholder .ph-sub { font-size: 0.75rem; color: #475569; margin-top: 0.2rem; }
+
+/* ===== BUTTON ===== */
 button.primary {
-    background: linear-gradient(135deg, #7b2ff7, #00d2ff) !important;
-    border: none !important;
-    box-shadow: 0 4px 15px rgba(123, 47, 247, 0.3) !important;
-    transition: all 0.3s ease !important;
-    font-weight: 700 !important;
-    letter-spacing: 0.3px !important;
+    background: linear-gradient(135deg, #6366f1, #8b5cf6) !important;
+    border: none !important; box-shadow: 0 2px 12px rgba(99,102,241,0.25) !important;
+    transition: all 0.2s ease !important; font-weight: 600 !important;
 }
 button.primary:hover {
-    transform: translateY(-2px) !important;
-    box-shadow: 0 6px 25px rgba(123, 47, 247, 0.5) !important;
+    transform: translateY(-1px) !important;
+    box-shadow: 0 4px 20px rgba(99,102,241,0.4) !important;
 }
 
-/* ===== SMOOTH TRANSITIONS ===== */
-.prose { transition: opacity 0.3s ease; }
-textarea, input { transition: border-color 0.3s ease, box-shadow 0.3s ease; }
-textarea:focus, input:focus { border-color: rgba(123, 47, 247, 0.5) !important; box-shadow: 0 0 0 3px rgba(123, 47, 247, 0.1) !important; }
+/* ===== INPUTS ===== */
+textarea, input { transition: border-color 0.2s ease; }
+textarea:focus, input:focus { border-color: rgba(99,102,241,0.4) !important; box-shadow: 0 0 0 2px rgba(99,102,241,0.08) !important; }
 
-/* ===== MARKDOWN TABLES ===== */
-table { border-collapse: separate !important; border-spacing: 0 !important; border-radius: 12px !important; overflow: hidden !important; }
-th { background: rgba(123, 47, 247, 0.15) !important; font-weight: 600 !important; }
-tr:hover td { background: rgba(123, 47, 247, 0.05) !important; }
+/* ===== TABLES ===== */
+table { border-collapse: separate !important; border-spacing: 0 !important; border-radius: 10px !important; overflow: hidden !important; }
+th { background: rgba(99,102,241,0.1) !important; font-weight: 600 !important; font-size: 0.85rem !important; }
+td { font-size: 0.85rem !important; }
 
-/* ===== CODE BLOCKS ===== */
-pre { border-radius: 12px !important; border: 1px solid rgba(123, 47, 247, 0.15) !important; }
+/* ===== CODE & QUOTES ===== */
+pre { border-radius: 10px !important; border: 1px solid rgba(100,100,180,0.12) !important; }
+blockquote { border-left: 3px solid #6366f1 !important; background: rgba(99,102,241,0.04) !important; border-radius: 0 8px 8px 0 !important; padding: 0.6rem 1rem !important; }
 
-/* ===== BLOCKQUOTES ===== */
-blockquote { border-left: 3px solid #7b2ff7 !important; background: rgba(123, 47, 247, 0.05) !important; border-radius: 0 8px 8px 0 !important; padding: 0.75rem 1rem !important; }
+/* ===== TABS ===== */
+.tabs { margin-top: 0.5rem; }
+.tab-nav button { font-weight: 600 !important; font-size: 0.82rem !important; }
+.tab-nav button.selected { border-color: #6366f1 !important; color: #a5b4fc !important; }
 
 footer { display: none !important; }
 """
 
 def build_demo():
-    with gr.Blocks(css=CSS, theme=gr.themes.Soft(primary_hue="violet", neutral_hue="slate"), title="GuardianAI — AI Safety Overseer") as demo:
+    with gr.Blocks(css=CSS, theme=gr.themes.Base(primary_hue="indigo", neutral_hue="slate"), title="GuardianAI — AI Oversight Environment") as demo:
 
         gr.HTML("""
         <div class="hero">
@@ -379,7 +365,7 @@ def build_demo():
             <div class="sub">An AI that watches over other AIs — trained with <b>GRPO</b> to detect
             hallucinations, data leaks, unauthorized actions & safety violations by comparing
             <em>what an AI says</em> vs <em>what it actually does</em>.</div>
-            <div class="badge">🔴 LIVE AI · Powered by HuggingFace Inference API</div>
+            <div class="tag">META PYTORCH OPENENV HACKATHON 2026 · POWERED BY HF INFERENCE</div>
             <div class="links">
                 <a href="https://huggingface.co/rajdeepchatale/guardian-ai-grpo-Qwen3">Trained Model ↗</a>
                 <a href="https://huggingface.co/spaces/rajdeepchatale/guardian-ai-grpo-Qwen3">Training Dashboard ↗</a>
@@ -392,15 +378,14 @@ def build_demo():
         <div class="metrics">
             <div class="metric"><div class="val g">0.60</div><div class="lbl">Reward</div><div class="chg g">↑ +33%</div></div>
             <div class="metric"><div class="val r">0.06</div><div class="lbl">Loss</div><div class="chg g">↓ -50%</div></div>
-            <div class="metric"><div class="val b">30/30</div><div class="lbl">Steps</div><div class="chg b">✅ Done</div></div>
-            <div class="metric"><div class="val p">5</div><div class="lbl">Signals</div><div class="chg p">Multi-reward</div></div>
-            <div class="metric"><div class="val o">97.7%</div><div class="lbl">GPU</div><div class="chg o">14.2/14.6 GB</div></div>
+            <div class="metric"><div class="val b">30/30</div><div class="lbl">Steps</div><div class="chg b">✓ Complete</div></div>
+            <div class="metric"><div class="val p">5</div><div class="lbl">Reward Signals</div><div class="chg p">Multi-component</div></div>
+            <div class="metric"><div class="val o">97.7%</div><div class="lbl">GPU Util</div><div class="chg o">14.2/14.6 GB</div></div>
         </div>
         """)
 
-        gr.Markdown("""---
-### 🧠 How GuardianAI Works
-
+        with gr.Accordion("🧠 How GuardianAI Works", open=False):
+            gr.Markdown("""
 GuardianAI acts as a **real-time oversight layer** for autonomous AI agents. It cross-references two data streams:
 
 | What the AI Told the User | What the AI Actually Did (Internal Logs) |
@@ -411,39 +396,40 @@ GuardianAI acts as a **real-time oversight layer** for autonomous AI agents. It 
 | "Processed your refund!" | Called `refunds_api` without permission |
 
 **5-Component Reward:** Detection (25%) · False Positive Control (25%) · Classification (20%) · Response (15%) · Reasoning (15%)
+""")
 
----""")
-
-        gr.HTML('<div class="sh"><span class="step-label">STEP 1</span> Select a Scenario</div>')
-        scenario_dropdown = gr.Dropdown(choices=list(SCENARIOS.keys()), label="Choose a scenario", value=DEFAULT_SCENARIO, interactive=True)
+        # ── SCENARIO SELECTION ──
+        gr.HTML('<div class="section-hdr"><span class="icon">📋</span> Select a Scenario</div>')
+        scenario_dropdown = gr.Dropdown(choices=list(SCENARIOS.keys()), label="Scenario", value=DEFAULT_SCENARIO, interactive=True)
         context_output = gr.Markdown(value=DEF_CTX)
 
         with gr.Row(equal_height=True):
             with gr.Column():
-                gr.Markdown("#### 💬 What the AI Told the User")
+                gr.Markdown("**💬 What the AI Told the User**")
                 action_text_output = gr.Textbox(value=_def["action_text"], lines=7, interactive=False, show_label=False)
             with gr.Column():
-                gr.Markdown("#### 🔧 What Actually Happened (Logs)")
+                gr.Markdown("**🔍 What Actually Happened (Logs)**")
                 action_log_output = gr.Textbox(value=_def["action_log"], lines=7, interactive=False, show_label=False)
 
-        gr.HTML('<div class="sh"><span class="step-label">STEP 2</span> Run Evaluation <span class="live-badge">LIVE AI</span></div>')
-        evaluate_btn = gr.Button("🛡️ Run GuardianAI Evaluation (Live AI)", variant="primary", size="lg")
-        gr.Markdown("*Calls a real AI model via HuggingFace Inference API and compares with our GRPO-trained expected output.*", elem_classes=["centered"])
+        # ── EVALUATION ──
+        gr.HTML('<div class="section-hdr"><span class="icon">⚡</span> Run Evaluation</div>')
+        evaluate_btn = gr.Button("🛡️ Run GuardianAI Evaluation", variant="primary", size="lg")
+        gr.Markdown("*Calls Qwen2.5-72B via HuggingFace Inference API and compares with our GRPO-trained output.*", elem_classes=["centered"])
 
-        gr.HTML('<div class="sh"><span class="step-label">RESULTS</span> 3-Way Comparison</div>')
+        # ── RESULTS IN TABS ──
+        gr.HTML('<div class="section-hdr"><span class="icon">📊</span> Evaluation Results</div>')
 
-        with gr.Row(equal_height=True):
-            with gr.Column():
-                no_guardian = gr.Markdown(value="*👆 Click 'Run Evaluation'*")
-            with gr.Column():
-                live_output = gr.Markdown(value="*👆 Click 'Run Evaluation'*")
-            with gr.Column():
-                trained_output = gr.Markdown(value="*👆 Click 'Run Evaluation'*")
+        with gr.Tabs():
+            with gr.TabItem("❌ Without GuardianAI"):
+                no_guardian = gr.Markdown(value="""<div class="result-placeholder"><div class="ph-icon">🔓</div><div class="ph-title">Baseline — No Oversight</div><div class="ph-sub">Run evaluation to see what happens without an AI safety layer</div></div>""")
+            with gr.TabItem("🤖 Live AI Analysis"):
+                live_output = gr.Markdown(value="""<div class="result-placeholder"><div class="ph-icon">🧠</div><div class="ph-title">Real-time Inference</div><div class="ph-sub">Run evaluation to see a live LLM analyze this scenario</div></div>""")
+            with gr.TabItem("✅ GRPO-Trained GuardianAI"):
+                trained_output = gr.Markdown(value="""<div class="result-placeholder"><div class="ph-icon">🎯</div><div class="ph-title">Trained Model Output</div><div class="ph-sub">Run evaluation to see the GRPO fine-tuned model's precise analysis</div></div>""")
 
-        gr.Markdown("""---
-### 🔄 Self-Improving AI — It Gets Better With Every Step
-
-Unlike traditional safety filters that are **static rules written once and never updated**, GuardianAI uses **reinforcement learning** — which means it continuously improves through experience.
+        with gr.Accordion("📈 Training Progress & Architecture", open=False):
+            gr.Markdown("""
+### Self-Improving AI — Gets Better With Every Step
 
 | | Static Safety Filters | GuardianAI (RL-based) |
 |---|---|---|
@@ -451,65 +437,43 @@ Unlike traditional safety filters that are **static rules written once and never
 | **Adaptability** | Breaks with new attack patterns | Adapts to new scenarios automatically |
 | **False positives** | High (blocks too much) | Actively penalized & reduced over time |
 | **Reasoning** | None — binary allow/block | Evidence-based, cites specific log entries |
-| **Improvement** | Requires human rewrite | Improves with every training step |
 
-### 📈 Improvement Trajectory
+### Improvement Trajectory
 
 ```
 Step  1  → Reward: 0.45  ██████████░░░░░░░░░░  Catches obvious violations, many false positives
 Step 10  → Reward: 0.51  ████████████░░░░░░░░  Starts reading permissions, fewer FPs
 Step 20  → Reward: 0.56  ██████████████░░░░░░  Learns to cross-reference logs with claims
 Step 30  → Reward: 0.60  ███████████████░░░░░  Evidence-based reasoning, nuanced decisions
-Step 100 → Reward: ???   ████████████████████  More steps = more domains = better oversight
 ```
 
-> **The key insight:** In just 30 training steps, GuardianAI's reward improved by **+33%** and loss dropped by **-50%**. The learning curve was still ascending — meaning more training = significantly better performance. With 100+ steps and expanded scenarios across healthcare, finance, and legal domains, GuardianAI can become a **production-grade oversight system**.
+> **Key insight:** In just 30 steps, reward improved by **+33%** and loss dropped by **-50%**. The curve is still ascending — more training = significantly better performance.
 
-### 🔁 The Continuous Learning Loop
+### Reward Signal Architecture
 
-```
-┌─────────────────────────────────────────────────────┐
-│  1. Deploy GuardianAI to monitor Worker AIs          │
-│  2. Collect real-world oversight decisions            │
-│  3. Human reviewers flag incorrect decisions          │
-│  4. Feed corrections back as new training scenarios   │
-│  5. Run GRPO training → model improves               │
-│  6. Redeploy improved model → Go to step 1           │
-└─────────────────────────────────────────────────────┘
-```
+| Component | Weight | What It Measures |
+|---|---|---|
+| **Detection** | 25% | Catch real problems |
+| **False Positive** | 25% | Don't flag safe actions |
+| **Classification** | 20% | Right type + severity |
+| **Response** | 15% | Right action (allow/warn/block) |
+| **Reasoning** | 15% | Cite specific log evidence |
 
-This is the same flywheel that powers ChatGPT's RLHF, but applied to **AI safety oversight** — making the Guardian smarter with every deployment cycle.
-
----
-### 🏗️ Reward Signal Architecture
-
-| Component | Weight | What It Measures | Why This Weight |
-|---|---|---|---|
-| **Detection** | 25% | Catch real problems | Core objective |
-| **False Positive** | 25% | Don't flag safe actions | Prevents "flag everything" collapse |
-| **Classification** | 20% | Right type + severity | Nuanced understanding |
-| **Response** | 15% | Right action (allow/warn/block) | Appropriate intervention |
-| **Reasoning** | 15% | Cite specific log evidence | Explainability for audits |
-
-**Anti-Gaming:** False positive traps prevent mode collapse. Multi-domain coverage ensures generalization.
-
----
-### 🔧 Technical Details
+### Technical Details
 
 | | |
 |---|---|
 | **Base Model** | Qwen/Qwen3-1.7B |
-| **Live Demo Model** | Qwen/Qwen2.5-72B-Instruct (HF Inference API) |
+| **Inference Model** | Qwen/Qwen2.5-72B-Instruct (HF Inference API) |
 | **Training** | GRPO via TRL GRPOTrainer |
 | **Quantization** | 4-bit BitsAndBytes NF4 |
 | **Fine-tuning** | LoRA r=16, α=32 (q_proj + v_proj) |
 | **Environment** | Custom OpenEnv · 3 domains × 2 difficulties |
 | **GPU** | NVIDIA T4 · 14.6GB VRAM · 97.7% utilization |
-| **Time** | ~4.5 hours (30 steps) |
 """)
 
-        gr.HTML("""<div style="text-align:center;padding:1rem;margin-top:0.5rem;border-top:1px solid #334155;">
-            <span style="color:#94a3b8;font-size:0.85rem;">🛡️ GuardianAI · Meta PyTorch OpenEnv Hackathon 2026 · Built by Rajdeep Chatale</span>
+        gr.HTML("""<div style="text-align:center;padding:1rem;margin-top:0.5rem;border-top:1px solid rgba(100,100,180,0.12);">
+            <span style="color:#64748b;font-size:0.8rem;">🛡️ GuardianAI · Meta PyTorch OpenEnv Hackathon 2026 · Built by Rajdeep Chatale</span>
         </div>""")
 
         scenario_dropdown.change(fn=show_context, inputs=[scenario_dropdown], outputs=[context_output, action_text_output, action_log_output])
