@@ -212,7 +212,7 @@ python demo_app.py
 | **📊 Training Dashboard** | [Trackio Dashboard](https://huggingface.co/spaces/rajdeepchatale/guardian-ai-grpo-Qwen3) |
 | **📝 Training Script** | [guardian_ai_grpo.py](guardian_ai_grpo.py) |
 | **📓 Kaggle Notebook** | [GRPO Training Notebook](https://www.kaggle.com/code/rajdeepchatale/notebook37714192a6) |
-| **📖 Blog / Writeup** | [blog_post.md](blog_post.md) |
+| **📖 Blog / Writeup** | [Blog.md](Blog.md) |
 | **💻 GitHub** | [rajdeepchatale/guardian-ai-env](https://github.com/rajdeepchatale/guardian-ai-env) |
 
 ---
