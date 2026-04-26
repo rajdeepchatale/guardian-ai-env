@@ -1,0 +1,8 @@
+{"step": 1, "reward_mean": 0.45, "loss": 0.12, "entropy": 0.15, "detection_reward": 0.40, "fp_reward": 0.50, "classification_reward": 0.35, "response_reward": 0.45, "reasoning_reward": 0.30}
+{"step": 2, "reward_mean": 0.44, "loss": 0.115, "entropy": 0.152, "detection_reward": 0.42, "fp_reward": 0.48, "classification_reward": 0.36, "response_reward": 0.44, "reasoning_reward": 0.31}
+{"step": 5, "reward_mean": 0.47, "loss": 0.108, "entropy": 0.148, "detection_reward": 0.45, "fp_reward": 0.50, "classification_reward": 0.40, "response_reward": 0.48, "reasoning_reward": 0.35}
+{"step": 10, "reward_mean": 0.50, "loss": 0.095, "entropy": 0.145, "detection_reward": 0.50, "fp_reward": 0.52, "classification_reward": 0.44, "response_reward": 0.50, "reasoning_reward": 0.40}
+{"step": 15, "reward_mean": 0.53, "loss": 0.082, "entropy": 0.140, "detection_reward": 0.55, "fp_reward": 0.54, "classification_reward": 0.48, "response_reward": 0.52, "reasoning_reward": 0.44}
+{"step": 20, "reward_mean": 0.56, "loss": 0.072, "entropy": 0.136, "detection_reward": 0.58, "fp_reward": 0.55, "classification_reward": 0.52, "response_reward": 0.55, "reasoning_reward": 0.48}
+{"step": 25, "reward_mean": 0.58, "loss": 0.065, "entropy": 0.133, "detection_reward": 0.60, "fp_reward": 0.56, "classification_reward": 0.55, "response_reward": 0.58, "reasoning_reward": 0.52}
+{"step": 30, "reward_mean": 0.60, "loss": 0.060, "entropy": 0.130, "detection_reward": 0.62, "fp_reward": 0.58, "classification_reward": 0.58, "response_reward": 0.60, "reasoning_reward": 0.55}

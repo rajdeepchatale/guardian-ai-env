@@ -371,7 +371,7 @@ footer { display: none !important; }
 """
 
 def build_demo():
-    with gr.Blocks(title="GuardianAI — AI Safety Overseer") as demo:
+    with gr.Blocks(css=CSS, theme=gr.themes.Soft(primary_hue="violet", neutral_hue="slate"), title="GuardianAI — AI Safety Overseer") as demo:
 
         gr.HTML("""
         <div class="hero">
@@ -519,4 +519,4 @@ This is the same flywheel that powers ChatGPT's RLHF, but applied to **AI safety
 
 if __name__ == "__main__":
     demo = build_demo()
-    demo.launch(share=True, css=CSS, theme=gr.themes.Soft(primary_hue="violet", neutral_hue="slate"))
+    demo.launch(share=True)
