@@ -10,7 +10,24 @@ pinned: false
 
 ![OpenEnv](https://img.shields.io/badge/OpenEnv-RL%20Environment-6C63FF?style=for-the-badge) ![PyTorch](https://img.shields.io/badge/PyTorch-2.x-EE4C2C?style=for-the-badge&logo=pytorch&logoColor=white) ![TRL](https://img.shields.io/badge/TRL-GRPO-8E44AD?style=for-the-badge) ![Qwen](https://img.shields.io/badge/Qwen3-1.7B-00C7B7?style=for-the-badge)
 
-> **🎯 Try the live demo →** [**GuardianAI on HuggingFace Spaces**](https://huggingface.co/spaces/rajdeepchatale/guardian_ai) *(includes real-time AI inference)*
+> **🎯 Try the live demo →** [**GuardianAI Interactive Playground**](https://huggingface.co/spaces/rajdeepchatale/guardian_ai)
+>
+> **📖 Read the full writeup →** [**Blog.md**](Blog.md)
+
+---
+
+## 🔗 Quick Links
+
+| Deliverable | Link |
+|---|---|
+| **🎮 Live Demo (Interactive Playground)** | [huggingface.co/spaces/rajdeepchatale/guardian_ai](https://huggingface.co/spaces/rajdeepchatale/guardian_ai) |
+| **🌐 OpenEnv Environment (Docker API)** | [huggingface.co/spaces/rajdeepchatale/guardian-ai-env](https://huggingface.co/spaces/rajdeepchatale/guardian-ai-env) |
+| **🧠 Trained Model** | [huggingface.co/rajdeepchatale/guardian-ai-grpo-Qwen3](https://huggingface.co/rajdeepchatale/guardian-ai-grpo-Qwen3) |
+| **📊 Training Dashboard (Trackio)** | [huggingface.co/spaces/rajdeepchatale/guardian-ai-grpo-Qwen3](https://huggingface.co/spaces/rajdeepchatale/guardian-ai-grpo-Qwen3) |
+| **📝 Training Script** | [guardian_ai_grpo.py](guardian_ai_grpo.py) |
+| **📓 Kaggle Notebook** | [kaggle.com/code/rajdeepchatale/notebook37714192a6](https://www.kaggle.com/code/rajdeepchatale/notebook37714192a6) |
+| **📖 Blog / Writeup** | [Blog.md](Blog.md) |
+| **💻 GitHub Repository** | [github.com/rajdeepchatale/guardian-ai-env](https://github.com/rajdeepchatale/guardian-ai-env) |
 
 ---
 
@@ -85,7 +102,7 @@ Some scenarios are intentionally designed to *look suspicious but are actually a
 
 ---
 
-## 📈 Results: What Changed After Training? (Show It)
+## 📈 Results: What Changed After Training?
 
 > **Model:** Qwen3-1.7B + LoRA · **Method:** GRPO · **Steps:** 30 · **GPU:** NVIDIA T4 (Kaggle) · **Time:** ~4.5 hours
 
@@ -99,8 +116,7 @@ Some scenarios are intentionally designed to *look suspicious but are actually a
 
 ### Training Curves
 
-![Training metrics showing loss decreasing from 0.12 to 0.06 and reward increasing from 0.45 to 0.60 over 30 GRPO steps](assets/trackio_dashboard.png)
-*Loss and reward tracked via Trackio over 30 GRPO steps. The final run (orange) shows clear convergence. [View live dashboard →](https://huggingface.co/spaces/rajdeepchatale/guardian-ai-grpo-Qwen3)*
+*View the [live Trackio dashboard →](https://huggingface.co/spaces/rajdeepchatale/guardian-ai-grpo-Qwen3) or see charts in the [interactive demo](https://huggingface.co/spaces/rajdeepchatale/guardian_ai).*
 
 ### Before vs After: Concrete Examples
 
@@ -123,8 +139,12 @@ But the internal log shows line 45 uses safe SQLAlchemy ORM.
 
 ### Interactive Demo
 
-![GuardianAI demo with training stats and evaluation](assets/demo_evaluation.png)
-*The [live Gradio demo](https://huggingface.co/spaces/rajdeepchatale/guardian_ai) includes real-time AI inference via HuggingFace API — judges can run evaluations and compare trained vs untrained behavior.*
+The [live Gradio demo](https://huggingface.co/spaces/rajdeepchatale/guardian_ai) includes:
+- **Real-time AI inference** via HuggingFace Inference API (Qwen2.5-72B)
+- **3-way comparison**: Without GuardianAI vs Live AI vs GRPO-Trained model
+- **Training progress charts** showing reward & loss curves
+- **Custom scenario input** — type your own scenarios for live analysis
+- **5 pre-built scenarios** across customer support, coding, and data analysis
 
 ---
 
@@ -181,7 +201,7 @@ cd guardian-ai-env
 pip install -e .
 
 # Run the server
-uvicorn server.app:app --port 8000
+uvicorn server.app:app --port 7860
 
 # Run the interactive demo locally
 python demo_app.py
@@ -199,21 +219,6 @@ python demo_app.py
 | **Fine-tuning** | LoRA r=16, α=32 (q_proj + v_proj) |
 | **Training Steps** | 30 |
 | **GPU** | NVIDIA T4 (Kaggle, 14.6GB VRAM, 97.7% utilization) |
-
----
-
-## 🔗 All Links
-
-| Deliverable | Link |
-|---|---|
-| **🌐 OpenEnv Environment (Docker)** | [guardian-ai-env Space](https://huggingface.co/spaces/rajdeepchatale/guardian-ai-env) |
-| **🎮 Live Demo (Interactive)** | [GuardianAI Space](https://huggingface.co/spaces/rajdeepchatale/guardian_ai) |
-| **🧠 Trained Model** | [guardian-ai-grpo-Qwen3](https://huggingface.co/rajdeepchatale/guardian-ai-grpo-Qwen3) |
-| **📊 Training Dashboard** | [Trackio Dashboard](https://huggingface.co/spaces/rajdeepchatale/guardian-ai-grpo-Qwen3) |
-| **📝 Training Script** | [guardian_ai_grpo.py](guardian_ai_grpo.py) |
-| **📓 Kaggle Notebook** | [GRPO Training Notebook](https://www.kaggle.com/code/rajdeepchatale/notebook37714192a6) |
-| **📖 Blog / Writeup** | [Blog.md](Blog.md) |
-| **💻 GitHub** | [rajdeepchatale/guardian-ai-env](https://github.com/rajdeepchatale/guardian-ai-env) |
 
 ---
 
