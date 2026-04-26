@@ -101,8 +101,13 @@ Task: {scenario['task']}
 Analyze the discrepancy between what was said and what was logged. Return your evaluation as JSON."""
 
 
+MODELS_TO_TRY = [
+    "Qwen/Qwen2.5-72B-Instruct",
+    "meta-llama/Meta-Llama-3-8B-Instruct",
+]
+
 def call_live_model(scenario_name):
-    """Call a real LLM via HuggingFace Inference API."""
+    """Call a real LLM via HuggingFace Inference API with multi-model fallback."""
     if not scenario_name or scenario_name not in SCENARIOS:
         return "⚠️ *Select a scenario first*"
 
@@ -113,27 +118,50 @@ def call_live_model(scenario_name):
         return "❌ `huggingface_hub` not installed. Run: `pip install huggingface_hub`"
 
     token = os.environ.get("HF_TOKEN", "")
-    try:
-        client = InferenceClient(token=token if token else None)
-        messages = [
-            {"role": "system", "content": GUARDIAN_SYSTEM_PROMPT},
-            {"role": "user", "content": prompt},
-        ]
-        response = client.chat_completion(
-            model="Qwen/Qwen2.5-1.5B-Instruct",
-            messages=messages,
-            max_tokens=512,
-            temperature=0.3,
-        )
-        raw_output = response.choices[0].message.content
-        # Try to parse and format
+    client = InferenceClient(token=token if token else None)
+    messages = [
+        {"role": "system", "content": GUARDIAN_SYSTEM_PROMPT},
+        {"role": "user", "content": prompt},
+    ]
+
+    raw_output = None
+    used_model = None
+    errors = []
+
+    for model_id in MODELS_TO_TRY:
         try:
-            parsed = json.loads(raw_output.strip().strip("```json").strip("```").strip())
-            icons = {"safe":"✅","data_leakage":"🔴","hallucination":"🟡","unauthorized_action":"🔴","false_confidence":"🟠"}
-            sev = {"none":"🟢 None","low":"🟡 Low","medium":"🟠 Medium","high":"🔴 High","critical":"⛔ CRITICAL"}
-            resp_map = {"allow":"✅ ALLOW","warn":"⚠️ WARN","block":"🚫 BLOCK"}
-            d = parsed.get("decision","unknown")
-            return f"""### 🤖 Live AI Response (Qwen 2.5 1.5B)
+            response = client.chat_completion(
+                model=model_id,
+                messages=messages,
+                max_tokens=512,
+                temperature=0.3,
+            )
+            raw_output = response.choices[0].message.content
+            used_model = model_id.split("/")[-1]
+            break
+        except Exception as e:
+            errors.append(f"{model_id.split('/')[-1]}: {str(e)[:80]}")
+            continue
+
+    if raw_output is None:
+        err_list = "\n".join(f"- {e}" for e in errors)
+        return f"❌ All models unavailable.\n\n{err_list}\n\n*Set `HF_TOKEN` env variable for access.*"
+
+    # Try to parse structured JSON
+    try:
+        clean = raw_output.strip()
+        # Handle markdown code blocks
+        if "```" in clean:
+            import re
+            match = re.search(r'```(?:json)?\s*(\{.*?\})\s*```', clean, re.DOTALL)
+            if match:
+                clean = match.group(1)
+        parsed = json.loads(clean)
+        icons = {"safe":"✅","data_leakage":"🔴","hallucination":"🟡","unauthorized_action":"🔴","false_confidence":"🟠"}
+        sev = {"none":"🟢 None","low":"🟡 Low","medium":"🟠 Medium","high":"🔴 High","critical":"⛔ CRITICAL"}
+        resp_map = {"allow":"✅ ALLOW","warn":"⚠️ WARN","block":"🚫 BLOCK"}
+        d = parsed.get("decision", "unknown")
+        return f"""### 🤖 Live AI Response ({used_model})
 
 | | |
 |---|---|
@@ -144,18 +172,15 @@ def call_live_model(scenario_name):
 **Live Reasoning:**
 > {parsed.get('reasoning', 'No reasoning provided')}
 
-🟢 *This response was generated in real-time by an AI model via HuggingFace Inference API.*"""
-        except (json.JSONDecodeError, KeyError):
-            return f"""### 🤖 Live AI Response (Raw Output)
+🟢 *Generated in real-time by `{used_model}` via HuggingFace Inference API.*"""
+    except (json.JSONDecodeError, KeyError):
+        return f"""### 🤖 Live AI Response ({used_model})
 
 ```
-{raw_output}
+{raw_output[:800]}
 ```
 
-🟢 *Generated in real-time. Model returned non-JSON — this is what an untrained model looks like before GRPO fine-tuning.*"""
-
-    except Exception as e:
-        return f"❌ API Error: `{str(e)[:200]}`\n\n*Tip: Set HF_TOKEN environment variable for reliable access.*"
+🟢 *Real-time output from `{used_model}`. Raw text shows what happens without GRPO fine-tuning on structured rewards.*"""
 
 
 def fmt_trained(r):
