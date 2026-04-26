@@ -8,3 +8,5 @@ build/
 *.egg
 .DS_Store
 .env
+.gradio/
+.cursorrules
