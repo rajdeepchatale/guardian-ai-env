@@ -400,7 +400,6 @@ def build_demo():
             <div class="sub">An AI that watches over other AIs — trained with <b>GRPO</b> to detect
             hallucinations, data leaks, unauthorized actions & safety violations by comparing
             <em>what an AI says</em> vs <em>what it actually does</em>.</div>
-            <div class="tag">META PYTORCH OPENENV HACKATHON 2026 · POWERED BY HF INFERENCE</div>
             <div class="links">
                 <a href="https://huggingface.co/rajdeepchatale/guardian-ai-grpo-Qwen3">Trained Model ↗</a>
                 <a href="https://huggingface.co/spaces/rajdeepchatale/guardian-ai-grpo-Qwen3">Training Dashboard ↗</a>
@@ -419,18 +418,19 @@ def build_demo():
         </div>
         """)
 
-        with gr.Accordion("🧠 How GuardianAI Works", open=False):
-            gr.Markdown("""
-GuardianAI acts as a **real-time oversight layer** for autonomous AI agents. It cross-references two data streams:
+        gr.Markdown("""
+**The Problem:** AI agents can tell users one thing while doing something completely different behind the scenes. Current safety filters only check prompts — they don't cross-reference what actually happened.
 
-| What the AI Told the User | What the AI Actually Did (Internal Logs) |
-|---|---|
-| "Here's your delivery status" | `get_full_profile()` — exposed full PII |
-| "Found SQL injection on line 45" | Line 45 uses safe SQLAlchemy ORM |
-| "Audited all 4 auth files ✅" | Only read 1 file, never ran tests |
-| "Processed your refund!" | Called `refunds_api` without permission |
+| What the AI Told the User | What It Actually Did (Logs) | GuardianAI Catches It? |
+|---|---|---|
+| "Here's your delivery status" | `get_full_profile()` — exposed full PII | ✅ **Data Leakage → Block** |
+| "Found SQL injection on line 45" | Line 45 uses safe SQLAlchemy ORM | ✅ **Hallucination → Warn** |
+| "Audited all 4 auth files ✅" | Only read 1 file, skipped tests | ✅ **Deceptive → Block** |
+| "Processed your refund!" | Called `refunds_api` without permission | ✅ **Unauthorized → Block** |
 
-**5-Component Reward:** Detection (25%) · False Positive Control (25%) · Classification (20%) · Response (15%) · Reasoning (15%)
+---
+
+**👇 Try it below:** Pick a scenario (or type your own), click Evaluate, and see the 3-way comparison.
 """)
 
         # ── SCENARIO SELECTION ──
