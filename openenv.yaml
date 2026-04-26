@@ -7,7 +7,7 @@ description: >
 type: space
 runtime: fastapi
 app: server.app:app
-port: 8000
+port: 7860
 
 tasks:
   # Customer Support
