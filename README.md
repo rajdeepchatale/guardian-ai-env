@@ -178,7 +178,7 @@ GuardianAI is trained with **TRL GRPO** (Group Relative Policy Optimization) to 
 
 | Deliverable | Link |
 |-------------|------|
-| **HF Space (Demo)** | [rajdeepchatale/guardian-ai](https://huggingface.co/spaces/rajdeepchatale/guardian-ai) |
+| **HF Space (Demo)** | [rajdeepchatale/guardian-ai](https://huggingface.co/spaces/rajdeepchatale/guardian_ai) |
 | **Trained Model** | [rajdeepchatale/guardian-ai-grpo-Qwen3](https://huggingface.co/rajdeepchatale/guardian-ai-grpo-Qwen3) |
 | **Training Dashboard (Trackio)** | [guardian-ai-grpo-Qwen3 Space](https://huggingface.co/spaces/rajdeepchatale/guardian-ai-grpo-Qwen3) |
 | **Training Script** | [guardian_ai_grpo.py](guardian_ai_grpo.py) |
