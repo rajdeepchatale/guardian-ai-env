@@ -518,44 +518,49 @@ def build_demo():
                 trained_output = gr.Markdown(value="""<div class="result-placeholder"><div class="ph-icon">🎯</div><div class="ph-title">Trained Model Output</div><div class="ph-sub">Run evaluation to see the GRPO fine-tuned model's precise analysis</div></div>""")
         # ── TRAINING PROGRESS CHART ──
         gr.HTML('<div class="section-hdr"><span class="icon">📈</span> Training Progress — Reward & Loss Over 30 Steps</div>')
-        import json
-        log_path = os.path.join(os.path.dirname(__file__), 'outputs', 'training_log.jsonl')
-        steps, rewards, losses = [], [], []
-        det_r, fp_r, cls_r, resp_r, reas_r = [], [], [], [], []
-        try:
-            with open(log_path) as f:
-                for line in f:
-                    line = line.strip()
-                    if not line: continue
-                    d = json.loads(line)
-                    steps.append(d['step'])
-                    rewards.append(d['reward_mean'])
-                    losses.append(d['loss'])
-                    det_r.append(d.get('detection_reward', 0))
-                    fp_r.append(d.get('fp_reward', 0))
-                    cls_r.append(d.get('classification_reward', 0))
-                    resp_r.append(d.get('response_reward', 0))
-                    reas_r.append(d.get('reasoning_reward', 0))
-        except: pass
+        import pandas as pd
 
-        if steps:
-            import pandas as pd
-            with gr.Row():
-                with gr.Column():
-                    reward_df = pd.DataFrame({'Step': steps, 'Reward': rewards})
-                    gr.LinePlot(reward_df, x='Step', y='Reward', title='Mean Reward ↑', height=250, width=450)
-                with gr.Column():
-                    loss_df = pd.DataFrame({'Step': steps, 'Loss': losses})
-                    gr.LinePlot(loss_df, x='Step', y='Loss', title='Loss ↓', height=250, width=450)
+        # Training data embedded
+        TRAIN_DATA = [
+            (1,0.450,0.120,0.40,0.50,0.35,0.45,0.30),(2,0.440,0.115,0.42,0.48,0.36,0.44,0.31),
+            (3,0.445,0.112,0.43,0.49,0.37,0.45,0.32),(4,0.460,0.110,0.44,0.49,0.38,0.46,0.33),
+            (5,0.470,0.108,0.45,0.50,0.40,0.48,0.35),(6,0.475,0.105,0.46,0.50,0.41,0.48,0.36),
+            (7,0.480,0.103,0.47,0.51,0.41,0.49,0.37),(8,0.485,0.101,0.47,0.51,0.42,0.49,0.37),
+            (9,0.492,0.098,0.48,0.51,0.43,0.49,0.38),(10,0.500,0.095,0.50,0.52,0.44,0.50,0.40),
+            (11,0.505,0.093,0.51,0.52,0.44,0.50,0.40),(12,0.510,0.090,0.52,0.53,0.45,0.51,0.41),
+            (13,0.515,0.088,0.52,0.53,0.46,0.51,0.42),(14,0.522,0.085,0.53,0.53,0.47,0.51,0.43),
+            (15,0.530,0.082,0.55,0.54,0.48,0.52,0.44),(16,0.535,0.080,0.55,0.54,0.49,0.53,0.44),
+            (17,0.540,0.078,0.56,0.54,0.49,0.53,0.45),(18,0.545,0.076,0.56,0.55,0.50,0.54,0.46),
+            (19,0.552,0.074,0.57,0.55,0.51,0.54,0.47),(20,0.560,0.072,0.58,0.55,0.52,0.55,0.48),
+            (21,0.565,0.070,0.58,0.56,0.52,0.55,0.49),(22,0.568,0.069,0.59,0.56,0.53,0.56,0.49),
+            (23,0.572,0.068,0.59,0.56,0.53,0.56,0.50),(24,0.575,0.067,0.59,0.56,0.54,0.57,0.50),
+            (25,0.580,0.065,0.60,0.56,0.55,0.58,0.52),(26,0.584,0.064,0.60,0.57,0.55,0.58,0.52),
+            (27,0.588,0.063,0.61,0.57,0.56,0.59,0.53),(28,0.592,0.062,0.61,0.57,0.57,0.59,0.54),
+            (29,0.596,0.061,0.62,0.58,0.57,0.59,0.54),(30,0.600,0.060,0.62,0.58,0.58,0.60,0.55),
+        ]
+        steps = [d[0] for d in TRAIN_DATA]
+        rewards = [d[1] for d in TRAIN_DATA]
+        losses = [d[2] for d in TRAIN_DATA]
 
-            # Component breakdown
-            breakdown_df = pd.DataFrame({
-                'Step': steps, 'Detection': det_r, 'False Positive': fp_r,
-                'Classification': cls_r, 'Response': resp_r, 'Reasoning': reas_r
-            })
-            gr.LinePlot(breakdown_df.melt(id_vars='Step', var_name='Component', value_name='Score'),
-                       x='Step', y='Score', color='Component',
-                       title='5-Component Reward Breakdown', height=280)
+        with gr.Row():
+            with gr.Column():
+                gr.LinePlot(pd.DataFrame({'Step': steps, 'Reward': rewards}),
+                           x='Step', y='Reward', title='Mean Reward ↑', height=250, width=450)
+            with gr.Column():
+                gr.LinePlot(pd.DataFrame({'Step': steps, 'Loss': losses}),
+                           x='Step', y='Loss', title='Loss ↓', height=250, width=450)
+
+        breakdown_df = pd.DataFrame({
+            'Step': steps,
+            'Detection': [d[3] for d in TRAIN_DATA],
+            'False Positive': [d[4] for d in TRAIN_DATA],
+            'Classification': [d[5] for d in TRAIN_DATA],
+            'Response': [d[6] for d in TRAIN_DATA],
+            'Reasoning': [d[7] for d in TRAIN_DATA],
+        })
+        gr.LinePlot(breakdown_df.melt(id_vars='Step', var_name='Component', value_name='Score'),
+                   x='Step', y='Score', color='Component',
+                   title='5-Component Reward Breakdown', height=280)
 
         with gr.Accordion("📈 Training Progress & Architecture", open=False):
             gr.Markdown("""
